@@ -7,24 +7,23 @@ def charToPriority(char: str) -> int:
     return val - 96
 
 def getCommons(one: list[str], two: list[str]) -> list[str]:
-    res: set[str] = set()
+    res = set()
     for x in one:
         for y in two:
             if x == y:
                 res.add(x)
     return list(res)
 
-def toGroups(arr: list[str], groupSize: int) -> list[list[str]]:
-    res: list[list[str]] = []
-    for i in range(0, len(arr), groupSize):
-        res.append(arr[i:i+groupSize])
+def toGroups(arr: list[str], size: int) -> list[list[str]]:
+    res = []
+    for i in range(0, len(arr), size):
+        res.append(arr[i:i+size])
     return res
 
-lines = open("input", "r").readlines()
+lines = open("input", "r").read().splitlines()
 res = 0
-groups = toGroups(lines, 3)
-for group in groups:
-    # convert list of strings to list of char lists with trailing \n removed
-    group = list(map(lambda x: list(x)[:-1], group))
+for group in toGroups(lines, 3):
+    # convert list of strings to list of char lists
+    group = list(map(lambda x: list(x), group))
     res += sum(list(map(charToPriority, getCommons(getCommons(group[0], group[1]), group[2]))))
 print(res)
