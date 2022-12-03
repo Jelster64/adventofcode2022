@@ -1,6 +1,5 @@
 #!/bin/python
-f = open("input", "r")
-lines = f.readlines()
+lines = open("input", "r").readlines()
 elves = []
 count = 0
 for line in lines:
