@@ -19,5 +19,5 @@ res = 0
 for line in lines:
     a = list(line)
     mid = round(len(a)/2)
-    res += sum(list(map(charToPriority, getCommons(a[:mid], a[mid:]))))
+    res += sum(map(charToPriority, getCommons(a[:mid], a[mid:])))
 print(res)

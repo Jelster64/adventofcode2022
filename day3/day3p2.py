@@ -25,5 +25,5 @@ res = 0
 for group in toGroups(lines, 3):
     # convert list of strings to list of char lists
     group = list(map(lambda x: list(x), group))
-    res += sum(list(map(charToPriority, getCommons(getCommons(group[0], group[1]), group[2]))))
+    res += sum(map(charToPriority, getCommons(getCommons(group[0], group[1]), group[2])))
 print(res)
