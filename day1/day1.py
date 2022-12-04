@@ -9,4 +9,5 @@ for line in lines:
     else:
         count += int(line)
 elves.append(count)
-print(max(elves))
+elves.sort()
+print(max(elves), sum(elves[-3:]))
