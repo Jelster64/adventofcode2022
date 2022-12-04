@@ -28,7 +28,7 @@ for line in lines:
 
 for group in toGroups(lines, 3):
     # convert list of strings to list of char lists
-    group = list(map(lambda x: list(x), group))
+    group = list(map(list, group))
     res2 += sum(map(charToPriority, reduce(getCommons, group)))
 
 print(res1, res2)
