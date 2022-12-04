@@ -11,7 +11,7 @@ def parse(string: str) -> list[int]:
     res = []
     for elf in string.split(","):
         res += elf.split("-")
-    return list(map(lambda x: int(x), res))
+    return list(map(int, res))
 
 def solve(func: Callable[[int, int ,int, int], bool], lines: list[str]) -> int:
     return sum(map(lambda x: int(func(x[0], x[1], x[2], x[3])), map(parse, lines)))
