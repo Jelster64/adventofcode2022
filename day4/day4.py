@@ -1,4 +1,5 @@
 #!/bin/python
+from typing import Callable
 
 def checkFullOverlap(a1: int, a2: int, b1: int, b2: int) -> bool:
     return (a1 <= b1 and a2 >= b2) or (a1 >= b1 and a2 <= b2)
@@ -12,7 +13,7 @@ def parse(string: str) -> list[int]:
         res += elf.split("-")
     return list(map(lambda x: int(x), res))
 
-def solve(func, lines) -> int:
+def solve(func: Callable[[int, int ,int, int], bool], lines: list[str]) -> int:
     return sum(map(lambda x: int(func(x[0], x[1], x[2], x[3])), map(parse, lines)))
 
 lines = open("input", "r").read().splitlines()
