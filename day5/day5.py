@@ -1,6 +1,12 @@
 #!/bin/python
 import copy
 
+class Move:
+    def __init__(self, amount: int, source: int, dest: int):
+        self.amount = amount
+        self.source = source
+        self.dest = dest
+
 def realIndex(i: int) -> int:
     if i == 1:
         return 0
@@ -17,29 +23,29 @@ def parseStacks(stackString: list[str]) -> list[list[str]]:
                 stacks[realIndex(i)].append(line[i])
     return stacks
 
-def parseMove(string: str) -> tuple[int, int, int]:
+def parseMove(string: str) -> Move:
     a = string.split()
-    res = list(map(int, (a[1], a[3], a[5])))
-    res[1] -= 1
-    res[2] -= 1
-    return tuple(res)
+    return Move(int(a[1]), int(a[3])-1, int(a[5])-1)
+
+def stackMove(source: list[str], dest: list[str]) -> None:
+    dest.append(source.pop())
 
 def whatsOnTop(stacks: list[list[str]]) -> str:
     return "".join([a[-1] for a in stacks])
 
-def crateMover9000(stacks: list[list[str]], moves: list[tuple[int, int, int]]) -> str:
+def crateMover9000(stacks: list[list[str]], moves: list[Move]) -> str:
     for m in moves:
-        for _ in range(m[0]):
-            stacks[m[2]].append(stacks[m[1]].pop())
+        for _ in range(m.amount):
+            stackMove(stacks[m.source], stacks[m.dest])
     return whatsOnTop(stacks)
 
-def crateMover9001(stacks: list[list[str]], moves: list[tuple[int, int, int]]) -> str:
+def crateMover9001(stacks: list[list[str]], moves: list[Move]) -> str:
     buffer = []
     for m in moves:
-        for _ in range(m[0]):
-            buffer.append(stacks[m[1]].pop())
+        for _ in range(m.amount):
+            stackMove(stacks[m.source], buffer)
         for _ in range(len(buffer)):
-            stacks[m[2]].append(buffer.pop())
+            stackMove(buffer, stacks[m.dest])
     return whatsOnTop(stacks)
 
 stacks, moves = map(str.splitlines, open("input", "r").read().split("\n\n"))
