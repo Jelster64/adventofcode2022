@@ -1,13 +1,5 @@
 #!/bin/python
-lines = open("input", "r").readlines()
-elves = []
-count = 0
-for line in lines:
-    if line.isspace():
-        elves.append(count)
-        count = 0
-    else:
-        count += int(line)
-elves.append(count)
+file = open("input", "r").read()
+elves = list(map(lambda x: (sum(map(int, x))), (map(str.splitlines, file.split("\n\n")))))
 elves.sort()
 print(max(elves), sum(elves[-3:]))
