@@ -1,14 +1,9 @@
 #!/bin/python
-from collections import deque
 
 def firstMarker(chars: list[str], length: int) -> int:
-    queue = deque()
-    for i, c in zip(range(len(chars)), chars):
-        queue.append(c)
-        if len(set(queue)) == length:
-            return i+1
-        if len(queue) >= length:
-            queue.popleft()
+    for i in range(len(chars)):
+        if len(set(chars[i:i+length])) == length:
+            return i + length
     return -1
 
 chars = list(open("input", "r").read())
