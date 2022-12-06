@@ -2,13 +2,13 @@
 from collections import deque
 
 def firstMarker(chars: list[str], length: int) -> int:
-    marker = deque()
+    queue = deque()
     for i, c in zip(range(len(chars)), chars):
-        marker.append(c)
-        if len(set(marker)) == length:
+        queue.append(c)
+        if len(set(queue)) == length:
             return i+1
-        if len(marker) >= length:
-            marker.popleft()
+        if len(queue) >= length:
+            queue.popleft()
     return -1
 
 chars = list(open("input", "r").read())
