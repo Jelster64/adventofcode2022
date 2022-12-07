@@ -58,14 +58,13 @@ def parseDirectoryStructure(root: Dir):
 
 def sumDirsLessThan(d, limit: int) -> int:
     match d:
-        case int():
-            return 0
         case Dir():
             sizeChildren = sum(map(lambda child: sumDirsLessThan(child, limit), d.contents))
             if d.getSize() <= limit:
                 return d.getSize() + sizeChildren
             return sizeChildren
-    return 0
+        case _:
+            return 0
 
 def dirsToSizes(d, currentList: list[int]):
     match d:
@@ -77,11 +76,10 @@ def dirsToSizes(d, currentList: list[int]):
             return
 
 def getSmallestBigFile(root: Dir, totalSpace: int, neededUnusedSpace: int) -> int:
-    currentUnusedSpace = totalSpace - root.getSize()
-    minDirSize = neededUnusedSpace - currentUnusedSpace
+    minimumDirSize = neededUnusedSpace - (totalSpace - root.getSize())
     sizes = []
     dirsToSizes(root, sizes)
-    return min(filter(lambda x: x >= minDirSize, sizes))
+    return min(filter(lambda x: x >= minimumDirSize, sizes))
 
 with open("input", "r") as f:
     commands = list(map(lambda x: x.split(), f.read().splitlines()[1:]))
