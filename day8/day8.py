@@ -2,21 +2,16 @@
 import copy
 from functools import reduce
 
-def isTreeVisible(i: int, j: int) -> bool:
+def isTreeVisible(i: int, j: int, trees: list[list[int]]) -> bool:
     if i == 0 or j == 0 or i == len(trees)-1 or j == len(trees[i])-1:
         return True
     height = trees[i][j]
-    if max(trees[i][j+1:]) < height:
-        return True
-    if max(trees[i][:j]) < height:
-        return True
-    if max(map(lambda a: a[j], trees[i+1:])) < height:
-        return True
-    if max(map(lambda a: a[j], trees[:i])) < height:
-        return True
-    return False
+    return max(trees[i][j+1:]) < height \
+    or max(trees[i][:j]) < height \
+    or max(map(lambda a: a[j], trees[i+1:])) < height \
+    or max(map(lambda a: a[j], trees[:i])) < height
 
-def calculateScenicScore(i: int, j: int) -> int:
+def calculateScenicScore(i: int, j: int, trees: list[list[int]]) -> int:
     height = trees[i][j]
     score = [0 for _ in range(4)]
 
@@ -51,16 +46,15 @@ def calculateScenicScore(i: int, j: int) -> int:
     return reduce(lambda x, y: x * y, score)
 
 with open("input", "r") as f:
-    trees = list(map(lambda x: list(map(int, x)), (map(list, f.read().splitlines()))))
+    trees = list(map(lambda row: list(map(int, row)), f.read().splitlines()))
 res = copy.deepcopy(trees)
 scenic = copy.deepcopy(trees)
 
 for i in range(len(trees)):
     for j in range(len(trees[i])):
-        res[i][j] = isTreeVisible(i, j)
-        scenic[i][j] = calculateScenicScore(i, j)
+        res[i][j] = isTreeVisible(i, j, trees)
+        scenic[i][j] = calculateScenicScore(i, j, trees)
 
 part1 = sum(map(lambda x: sum(list(map(int, x))), res))
 part2 = max(map(max, scenic))
-
 print(part1, part2)
