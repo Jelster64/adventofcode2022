@@ -1,5 +1,6 @@
 #!/bin/python
 import copy
+import operator
 from functools import reduce
 
 def isTreeVisible(i: int, j: int, trees: list[list[int]]) -> bool:
@@ -27,7 +28,7 @@ def scenicScore(i: int, j: int, trees: list[list[int]]) -> int:
                     trees[i][j+1:],\
                     list(reversed([trees[k][j] for k in range(i)])),\
                     [trees[k][j] for k in range(i+1, len(trees[i]))]]
-    return reduce(lambda x, y: x * y, map(lambda x: lineOfSightScore(x, height), linesOfSight))
+    return reduce(operator.mul, map(lambda x: lineOfSightScore(x, height), linesOfSight))
 
 with open("input", "r") as f:
     trees = list(map(lambda row: list(map(int, row)), f.read().splitlines()))
