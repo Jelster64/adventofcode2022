@@ -1,4 +1,7 @@
 #!/bin/python
+import operator
+from functools import reduce
+from functools import partial
 
 def toSize(obj) -> int:
     match obj:
@@ -59,30 +62,26 @@ def parseDirectoryStructure(root: Dir):
 def sumDirsLessThan(d, limit: int) -> int:
     match d:
         case Dir():
-            sizeChildren = sum(map(lambda child: sumDirsLessThan(child, limit), d.contents))
+            sizeChildren = sum(map(partial(sumDirsLessThan, limit=limit), d.contents))
             if d.getSize() <= limit:
                 return d.getSize() + sizeChildren
             return sizeChildren
         case _:
             return 0
 
-def dirsToSizes(d, currentList: list[int]):
+def dirsToSizes(d) -> list[int]:
     match d:
         case Dir():
-            for child in d.contents:
-                dirsToSizes(child, currentList)
-            currentList.append(d.getSize())
+            return [d.getSize()] + list(reduce(operator.add, map(dirsToSizes, d.contents)))
         case _:
-            return
+            return []
 
 def getSmallestBigFile(root: Dir, totalSpace: int, neededUnusedSpace: int) -> int:
     minimumDirSize = neededUnusedSpace - (totalSpace - root.getSize())
-    sizes = []
-    dirsToSizes(root, sizes)
-    return min(filter(lambda x: x >= minimumDirSize, sizes))
+    return min(filter(lambda x: x >= minimumDirSize, dirsToSizes(root)))
 
 with open("input", "r") as f:
-    commands = list(map(lambda x: x.split(), f.read().splitlines()[1:]))
+    commands = list(map(str.split, f.read().splitlines()[1:]))
 root: Dir = Dir("/", None)
 parseDirectoryStructure(root)
 part1 = sumDirsLessThan(root, 100000)
