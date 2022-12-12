@@ -8,8 +8,7 @@ def charToHeight(char: str) -> int:
         case 'E':
             return 26
         case _:
-            val = ord(char)
-            return val - 96
+            return ord(char) - 96
 
 def getNeighbors(heights, x, y) -> list[tuple[str, str]]:
     res = []
