@@ -24,7 +24,7 @@ def getNeighbors(heights, x, y) -> list[tuple[str, str]]:
         res.append((current, f"{x}-{y-1}"))
     return res
 
-def constructGraph(mountain):
+def constructGraph(mountain) -> nx.DiGraph:
     heights = list(map(lambda x: list(map(charToHeight, x)), mountain))
     edges = []
     for i in range(len(heights)):
@@ -35,7 +35,7 @@ def constructGraph(mountain):
         graph.add_edge(e[0], e[1])
     return graph
 
-def getPathLength(graph, start, goal):
+def getPathLength(graph, start, goal) -> int:
     try:
         return len(nx.dijkstra_path(graph, start, goal)) - 1
     except:
