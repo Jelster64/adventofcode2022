@@ -1,5 +1,4 @@
 #!/bin/python
-file = open("input", "r").read()
-elves = list(map(lambda x: sum(map(int, x)), map(str.splitlines, file.split("\n\n"))))
-elves.sort()
+with open("input", "r") as f:
+    elves = sorted(list(map(lambda x: sum(map(int, x)), map(str.splitlines, f.read().split("\n\n")))))
 print(max(elves), sum(elves[-3:]))
