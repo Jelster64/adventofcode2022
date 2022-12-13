@@ -26,12 +26,11 @@ def compare(one, two) -> bool | None:
         case list(), list():
             for left, right in zip(one, two):
                 res = compare(left, right)
-                if res == None:
-                    continue
-                return res
-            if len(one) == len(two):
-                return None
-            return len(one) <= len(two)
+                if res != None:
+                    return res
+            if len(one) != len(two):
+                return len(one) < len(two)
+            return None
 
 def pairsOfPackets(packets) -> int:
     res = 0
