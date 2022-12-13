@@ -35,7 +35,7 @@ def compare(one, two) -> bool | None:
 
 def pairsOfPackets(packets) -> int:
     res = 0
-    rightOrder = list(map(lambda x: reduce(compare, x), packets))
+    rightOrder = map(lambda x: reduce(compare, x), packets)
     for i, b in enumerate(rightOrder, 1):
         if b:
             res += i
