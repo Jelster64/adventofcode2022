@@ -1,5 +1,4 @@
 #!/bin/python
-import ast
 from functools import reduce
 from functools import cmp_to_key
 import operator
@@ -51,7 +50,7 @@ def decoderKey(packets) -> int:
     return res
 
 with open("input", "r") as f:
-    packets = list(map(lambda x: list(map(ast.literal_eval, x)), map(str.splitlines, f.read().split("\n\n"))))
+    packets = list(map(lambda x: list(map(eval, x)), map(str.splitlines, f.read().split("\n\n"))))
 part1 = pairsOfPackets(packets)
 part2 = decoderKey(packets)
 print(part1, part2)
