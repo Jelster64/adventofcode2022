@@ -1,5 +1,4 @@
 #!/bin/python
-from typing import Callable
 import collections
 
 Move = collections.namedtuple('Move', ['i', 'j', 'direction'])
