@@ -98,11 +98,11 @@ def oneStep(grove: list[list[str]], functions):
     # find index of every duplicate location
     counts = dict(collections.Counter(newLocations))
     dupes = [key for key, value in counts.items() if value > 1]
-    indecesDupes = [i for i, loc in enumerate(newLocations) if loc in dupes]
+    indicesDupes = [i for i, loc in enumerate(newLocations) if loc in dupes]
 
     # move
     for i, m in enumerate(moves):
-        if i not in indecesDupes and m.direction is not None:
+        if i not in indicesDupes and m.direction is not None:
             grove[m.i][m.j] = '.'
             y, x = newLocations[i]
             grove[y][x] = '#'
